@@ -84,12 +84,14 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map_creator.cpp" />
+    <ClCompile Include="grant.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="map_creator.h" />
+    <ClInclude Include="grant.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

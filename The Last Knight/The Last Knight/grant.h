@@ -1,12 +1,12 @@
 #include "Entity.h"
 
-#ifndef __HERO_H__ 
-#define __HERO_H__ 
+#ifndef __GRANT_H__ 
+#define __GRANT_H__ 
 
-class Hero : public Entity
+class Grant : public Entity
 {
 public:
-	Hero();
+	Grant();
 	void update(float,float);
 	void control();
 	void setHP(int);

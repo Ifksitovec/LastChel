@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <iostream>
+#include <cmath>
 
 void Entity::setstay()
 {
@@ -46,11 +47,6 @@ int Entity::getHP()
 	return hp;
 }
 
-void Entity::setHP(int h)
-{
-	hp += h;
-}
-
 //получение позиции по Х персонажа
 float Entity::getposX()
 {
@@ -63,3 +59,25 @@ float Entity::getposY()
 	return posY;
 }
 
+void Entity::changePos(float x, float y)
+{
+	posX += x;
+	posY += y;
+}
+
+int Entity::getDamage()
+{
+	return damage;
+}
+
+bool Entity::shoot_delay()
+{
+	shoot_time = time.getElapsedTime().asMilliseconds();
+	if (shoot_time >= delay)
+	{
+		time.restart();
+		return true;
+	}
+	else
+		return false;
+}

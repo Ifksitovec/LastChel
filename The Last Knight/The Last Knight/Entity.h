@@ -16,20 +16,24 @@ protected:
 	float speed, dx, dy, posX, posY;
 	Gstate state;
 	enum { pers, shell } type;
-	std::string name;
 	Texture texture;
 	Image image;
 	Sprite sprite;
+	int damage;
 
 public:
+	int getDamage();
+	void changePos(float,float);
 	void setstay();
 	float getspeed();
 	Gstate getState();
 	Sprite getimage();
 	FloatRect getRect();
+	virtual bool radiusDamage(float,float) = 0;
 	virtual void update(float,float) = 0;
+	virtual void control() = 0;
+	virtual void setHP(int) = 0;
 	int getHP();
-	void setHP(int);
 	float getposX();
 	float getposY();
 	bool getLife();
