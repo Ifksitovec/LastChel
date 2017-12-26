@@ -1,17 +1,18 @@
 #include "grant.h"
 
-Grant::Grant()
+Grant::Grant(float x, float y)
 {
 	prevstate = east;//направляющее положение
 	state = stay; // начальное положение
 	hp = 150;
-	posX = 800;
-	posY = 800;
+	posX = x;
+	posY = y;
 	speed = 0.05;
 	type = pers;
 	CurrentFrame = 0;
 	life = true;
 	damage = -20;
+	N = 0;
 
 	texture.loadFromFile("images/grant.png");
 	sprite.setTexture(texture);
@@ -151,12 +152,12 @@ void Grant::control()
 
 
 //изменение движения
-void Grant::update(float time,float n)
+void Grant::update(float time,float n1)
 {
 	if (life)
 	{
 		control();
-		if ((int)n == 0)
+		if ((int)n1 == 0)
 		{
 			switch (state)
 			{
@@ -315,57 +316,57 @@ void Grant::update(float time,float n)
 					{
 						case north:
 						{	
-							sprite.setTextureRect(IntRect(318 + 60 * int(n), 0, size_img + 10, size_img));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(0, 0, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(318 + 60 * int(n1), 0, size_img + 10, size_img));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 0, size_img +10, size_img));
 							break;
 						}
 
 						case east:
 						{	
-							sprite.setTextureRect(IntRect(314 + 63 * int(n), 124, size_img + 13, size_img + 10));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(0, 125, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(314 + 63 * int(n1), 124, size_img + 13, size_img + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 125, size_img + 10, size_img));
 							break;
 						}
 
 						case west:
 						{	
-							sprite.setTextureRect(IntRect(327 + 60 * int(n), 380, size_img +10, size_img + 10));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(14, 381, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(327 + 60 * int(n1), 380, size_img +10, size_img + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(14, 381, size_img +10, size_img));
 							break;
 						}
 
 						case south:
 						{	
-							sprite.setTextureRect(IntRect(310 + 63 * int(n), 251, size_img + 13, size_img + 10));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(0, 252, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(310 + 63 * int(n1), 251, size_img + 13, size_img + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 252, size_img + 10, size_img));
 							break;
 						}
 
 						case north_west:
 						{	
-							sprite.setTextureRect(IntRect(315 + 64 * int(n), 445, size_img + 14, size_img));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(6, 446, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(315 + 64 * int(n1), 445, size_img + 14, size_img));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(6, 446, size_img + 11, size_img));
 							break;
 						}
 
 						case north_east:
 						{	
-							sprite.setTextureRect(IntRect(315 + 62 * int(n), 61, size_img + 12, size_img));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(0, 62, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(315 + 62 * int(n1), 61, size_img + 12, size_img));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 62, size_img + 11, size_img));
 							break;
 						}
 
 						case south_west:
 						{	
-							sprite.setTextureRect(IntRect(329 + 60 * int(n), 315, size_img + 10, size_img + 10));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(11, 315, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(329 + 60 * int(n1), 315, size_img + 10, size_img + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(11, 315, size_img + 10, size_img));
 							break;
 						}
 
 						case south_east:
 						{	
-							sprite.setTextureRect(IntRect(308 + 65 * int(n), 187, size_img + 15, size_img));
-							if ((int)n == 4) sprite.setTextureRect(IntRect(0, 188, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(308 + 65 * int(n1), 187, size_img + 15, size_img));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 188, size_img + 10, size_img));
 							break;
 						}
 						

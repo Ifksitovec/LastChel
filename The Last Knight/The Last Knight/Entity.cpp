@@ -81,3 +81,14 @@ bool Entity::shoot_delay()
 	else
 		return false;
 }
+
+void Entity::setN(float time)
+{
+	if (N > 4) N = 0;
+	else N += 0.01*time;
+}
+
+float Entity::getN()
+{
+	return N;
+}

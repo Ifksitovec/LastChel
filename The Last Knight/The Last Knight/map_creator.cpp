@@ -44,23 +44,12 @@ void update_map(int n)
 		
 		for(int i = 0;i < HEIGHT_MAP;i++)//добавление левой линии карты
 		{
-			randomnumber = rand() % 100 ;
-			if ((randomnumber >=0) && (randomnumber<50))
-			{
-				AddTileMap[i][0] = '0';
-			}
-			if ((randomnumber >=50) && (randomnumber<75))
-			{
-				AddTileMap[i][0] = '1';
-			}
-			if ((randomnumber >=75) && (randomnumber<98))
-			{
-				AddTileMap[i][0] = '2';
-			}
-			if ((randomnumber >=98) && (randomnumber<100))
-			{
-				AddTileMap[i][0] = '3';
-			}
+			randomnumber = rand() % 1000 ;
+			if ((randomnumber >= 0) && (randomnumber < 499)) AddTileMap[i][0] = '0';
+			if ((randomnumber >= 499) && (randomnumber < 500))  AddTileMap[i][0] = 'g';
+			if ((randomnumber >= 500) && (randomnumber < 750)) AddTileMap[i][0] = '1';
+			if ((randomnumber >= 750) && (randomnumber < 980))AddTileMap[i][0] = '2';
+			if ((randomnumber >= 980) && (randomnumber < 1000))AddTileMap[i][0] = '3';
 		}
 	}
 
@@ -75,23 +64,12 @@ void update_map(int n)
 		
 		for(int i = 0;i < HEIGHT_MAP;i++)//добавление правой линии карты
 		{
-			randomnumber = rand() % 100 ;
-			if ((randomnumber >=0) && (randomnumber<50))
-			{
-				AddTileMap[i][HEIGHT_MAP - 1] = '0';
-			}
-			if ((randomnumber >=50) && (randomnumber<75))
-			{
-				AddTileMap[i][HEIGHT_MAP - 1] = '1';
-			}
-			if ((randomnumber >=75) && (randomnumber<98))
-			{
-				AddTileMap[i][HEIGHT_MAP - 1] = '2';
-			}
-			if ((randomnumber >=98) && (randomnumber<100))
-			{
-				AddTileMap[i][HEIGHT_MAP - 1] = '3';
-			}
+			randomnumber = rand() % 1000 ;
+			if ((randomnumber >= 0) && (randomnumber < 499)) AddTileMap[i][HEIGHT_MAP - 1] = '0';
+			if ((randomnumber >= 499) && (randomnumber < 500))  AddTileMap[i][HEIGHT_MAP - 1] = 'g';
+			if ((randomnumber >= 500) && (randomnumber < 750)) AddTileMap[i][HEIGHT_MAP - 1] = '1';
+			if ((randomnumber >= 750) && (randomnumber < 980)) AddTileMap[i][HEIGHT_MAP - 1] = '2';
+			if ((randomnumber >= 980) && (randomnumber < 1000)) AddTileMap[i][HEIGHT_MAP - 1] = '3';
 		}
 	}
 
@@ -106,23 +84,12 @@ void update_map(int n)
 		
 		for(int j = 0;j < HEIGHT_MAP;j++)//добавление нижней линии карты
 		{
-			randomnumber = rand() % 100 ;
-			if ((randomnumber >=0) && (randomnumber<50))
-			{
-				AddTileMap[HEIGHT_MAP - 1][j] = '0';
-			}
-			if ((randomnumber >=50) && (randomnumber<75))
-			{
-				AddTileMap[HEIGHT_MAP - 1][j] = '1';
-			}
-			if ((randomnumber >=75) && (randomnumber<98))
-			{
-				AddTileMap[HEIGHT_MAP - 1][j] = '2';
-			}
-			if ((randomnumber >=98) && (randomnumber<100))
-			{
-				AddTileMap[HEIGHT_MAP - 1][j] = '3';
-			}
+			randomnumber = rand() % 1000 ;
+			if ((randomnumber >= 0) && (randomnumber < 499)) AddTileMap[HEIGHT_MAP - 1][j] = '0';
+			if ((randomnumber >= 499) && (randomnumber < 500))  AddTileMap[HEIGHT_MAP - 1][j] = 'g';
+			if ((randomnumber >= 500) && (randomnumber < 750)) AddTileMap[HEIGHT_MAP - 1][j] = '1';
+			if ((randomnumber >= 750) && (randomnumber < 980)) AddTileMap[HEIGHT_MAP - 1][j] = '2';
+			if ((randomnumber >= 980) && (randomnumber < 1000)) AddTileMap[HEIGHT_MAP - 1][j] = '3';
 		}
 	}
 
@@ -137,23 +104,12 @@ void update_map(int n)
 		
 		for(int j = 0;j < HEIGHT_MAP;j++)//добавление верхней линии карты
 		{
-			randomnumber = rand() % 100 ;
-			if ((randomnumber >=0) && (randomnumber<50))
-			{
-				AddTileMap[0][j] = '0';
-			}
-			if ((randomnumber >=50) && (randomnumber<75))
-			{
-				AddTileMap[0][j] = '1';
-			}
-			if ((randomnumber >=75) && (randomnumber<98))
-			{
-				AddTileMap[0][j] = '2';
-			}
-			if ((randomnumber >=98) && (randomnumber<100))
-			{
-				AddTileMap[0][j] = '3';
-			}
+			randomnumber = rand() % 1000 ;
+			if ((randomnumber >= 0) && (randomnumber < 499)) AddTileMap[0][j] = '0';
+			if ((randomnumber >= 499) && (randomnumber < 500))  AddTileMap[0][j] = 'g';
+			if ((randomnumber >= 500) && (randomnumber < 750)) AddTileMap[0][j] = '1';
+			if ((randomnumber >= 750) && (randomnumber < 980)) AddTileMap[0][j] = '2';
+			if ((randomnumber >= 980) && (randomnumber < 1000)) AddTileMap[0][j] = '3';
 		}
 	}
 

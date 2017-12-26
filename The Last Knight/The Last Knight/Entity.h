@@ -20,8 +20,11 @@ protected:
 	Image image;
 	Sprite sprite;
 	int damage;
+	float N; // счетчик атаки
 
 public:
+	float getN(); // получение значения счетчика
+	void setN(float); // изменение счетчика атаки
 	int getDamage();
 	void changePos(float,float);
 	void setstay();

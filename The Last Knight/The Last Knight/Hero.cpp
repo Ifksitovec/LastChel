@@ -4,7 +4,7 @@ Hero::Hero()
 {
 	prevstate = east;//направляющие положение
 	state = stay; // начальное положение
-	hp = 100;
+	hp = 1000;
 	posX = (size - size_img) / 2;
 	posY = (size - size_img) / 2;
 	speed = 0.1;
@@ -25,64 +25,68 @@ void Hero::setHP(int h)
 	if (state != block) hp += h;
 }
 
-bool Hero::radiusDamage(float x, float y)
+bool Hero::radiusDamage(float x, float y)// определение находится ли противник в зоне атаки
 {
 	switch (prevstate)
 	{
 		case north:
 		{
-			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((posY - size_img/2  - y) < 15)) return true;
+			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((posY - size_img  - y) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case west:
 		{
-			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((posX - size_img/2  - x) < 15)) return true;
+			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((posX - size_img  - x) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case east:
 		{
-			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((x - posX - size_img/2) < 15)) return true;
+			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((x - posX - size_img) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case south:
 		{
-			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((y - posY - size_img/2) < 15)) return true;
+			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((y - posY - size_img) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case north_east:
 		{
-			if (((x - posX - size_img/2) < 15) && ((posY - size_img/2  - y) < 15)) return true;
+			if (((x - posX - size_img) < 15) && ((posY - size_img  - y) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case north_west:
 		{
-			if (((posY - size_img/2  - y) < 15) && ((posX - size_img/2  - x) < 15)) return true;
+			if (((posY - size_img  - y) < 15) && ((posX - size_img  - x) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case south_east:
 		{
-			if (((y - posY - size_img/2) < 15) && ((x - posX - size_img/2) < 15)) return true;
+			if (((y - posY - size_img) < 15) && ((x - posX - size_img) < 15)) return true;
 			else return false;
 			break;
 		}
 
 		case south_west:
 		{
-			if (((posX - size_img/2  - x) < 15) && ((y - posY - size_img/2) < 15)) return true;
+			if (((posX - size_img  - x) < 15) && ((y - posY - size_img) < 15)) return true;
 			else return false;
 			break;
+		}
+		default:
+		{
+			return false;
 		}
 	}
 }
@@ -432,6 +436,62 @@ void Hero::update(float time, float n)
 				}
 				prevstate = south_west;
 				break; 
+
+			case block: // блокировка
+			{	
+				switch (prevstate)
+				{
+					case north:
+					{
+						sprite.setTextureRect(IntRect(377, 0, size_img, size_img)); 
+						break;
+					}
+					
+					case west:
+					{
+						sprite.setTextureRect(IntRect(368, 380, size_img + 10, size_img)); 
+						break;
+					}
+
+					case east:
+					{
+						sprite.setTextureRect(IntRect(383, 125, size_img + 10, size_img)); 
+						break;
+					}
+
+					case south:
+					{
+						sprite.setTextureRect(IntRect(330, 318, size_img - 10, size_img)); 
+						break;
+					}
+
+					case north_west:
+					{
+						sprite.setTextureRect(IntRect(374, 446, size_img, size_img)); 
+						break;
+					}
+
+					case north_east:
+					{
+						sprite.setTextureRect(IntRect(385, 61, size_img, size_img)); 
+						break;
+					}
+
+					case south_west:
+					{
+						sprite.setTextureRect(IntRect(315, 251, size_img, size_img)); 
+						break;
+					}
+
+					case south_east:
+					{
+						sprite.setTextureRect(IntRect(381, 192, size_img - 10, size_img)); 
+						break;
+					}
+				}
+
+				break;
+			}
 			}
 		}
 		else
