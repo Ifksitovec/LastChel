@@ -2,11 +2,11 @@
 
 Hero::Hero() 
 {
-	prevstate = east;//направл€ющие положение
+	PrevState = east;//направл€ющие положение
 	state = stay; // начальное положение
 	hp = 1000;
-	posX = (size - size_img) / 2;
-	posY = (size - size_img) / 2;
+	PosX = (size - SizeImg) / 2;
+	PosY = (size - SizeImg) / 2;
 	speed = 0.1;
 	type = pers;
 	score = 0;
@@ -16,71 +16,71 @@ Hero::Hero()
 
 	texture.loadFromFile("images/footman.png");
 	sprite.setTexture(texture);
-	sprite.setPosition(posX, posY);
-	sprite.setTextureRect(IntRect(0, 127, size_img, size_img));
+	sprite.setPosition(PosX, PosY);
+	sprite.setTextureRect(IntRect(0, 127, SizeImg, SizeImg));
 }
 
-void Hero::setHP(int h)
+void Hero::SetHp(int h)
 {
 	if (state != block) hp += h;
 }
 
-bool Hero::radiusDamage(float x, float y)// определение находитс€ ли противник в зоне атаки
+bool Hero::RadiusDamage(float x, float y)// определение находитс€ ли противник в зоне атаки
 {
-	switch (prevstate)
+	switch (PrevState)
 	{
 		case north:
 		{
-			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((posY - size_img  - y) < 15)) return true;
+			if ((x >= PosX - SizeImg) && (x <= PosX + 2 * SizeImg) && ((PosY - SizeImg/2  - y) < 25) & ((PosY - SizeImg/2  - y) > -25)) return true;
 			else return false;
 			break;
 		}
 
 		case west:
 		{
-			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((posX - size_img  - x) < 15)) return true;
+			if ((y >= PosY - SizeImg) && (y <= PosY + 2 * SizeImg) && ((PosX - SizeImg/2  - x) < 25) && ((PosX - SizeImg/2  - x) > -25)) return true;
 			else return false;
 			break;
 		}
 
 		case east:
 		{
-			if ((y >= posY - size_img) && (y <= posY + 2 * size_img) && ((x - posX - size_img) < 15)) return true;
+			if ((y >= PosY - SizeImg) && (y <= PosY + 2 * SizeImg) && ((x - PosX - SizeImg/2) < 25) && ((x - PosX - SizeImg/2) > -25)) return true;
 			else return false;
 			break;
 		}
 
 		case south:
 		{
-			if ((x >= posX - size_img) && (x <= posX + 2 * size_img) && ((y - posY - size_img) < 15)) return true;
+			if ((x >= PosX - SizeImg) && (x <= PosX + 2 * SizeImg) && ((y - PosY - SizeImg/2) < 25) && ((y - PosY - SizeImg/2) > -25)) return true;
 			else return false;
 			break;
 		}
 
-		case north_east:
+		case NorthEast:
 		{
-			if (((x - posX - size_img) < 15) && ((posY - size_img  - y) < 15)) return true;
+			if (((x - PosX - SizeImg/2) < 25) && ((PosY - SizeImg/2  - y) < 25) && ((x - PosX - SizeImg/2) > -25) && ((PosY - SizeImg/2  - y) > -25)) return true;
 			else return false;
 			break;
 		}
 
-		case north_west:
+		case NorthWest:
 		{
-			if (((posY - size_img  - y) < 15) && ((posX - size_img  - x) < 15)) return true;
+			if (((PosY - SizeImg/2  - y) < 25) && ((PosX - SizeImg/2  - x) < 25) && ((PosY - SizeImg/2  - y) > -25) && ((PosX - SizeImg/2  - x) > -25)) return true;
 			else return false;
 			break;
 		}
 
-		case south_east:
+		case SouthEast:
 		{
-			if (((y - posY - size_img) < 15) && ((x - posX - size_img) < 15)) return true;
+			if (((y - PosY - SizeImg/2) < 25) && ((x - PosX - SizeImg/2) < 25) && ((y - PosY - SizeImg/2) > -25) && ((x - PosX - SizeImg/2) > -25)) return true;
 			else return false;
 			break;
 		}
 
-		case south_west:
+		case SouthWest:
 		{
-			if (((posX - size_img  - x) < 15) && ((y - posY - size_img) < 15)) return true;
+			if (((PosX - SizeImg/2/  - x) < 25) && ((y - PosY - SizeImg/2) < 25) && ((PosX - SizeImg/2  - x) > -25) && ((y - PosY - SizeImg/2) > -25)) return true;
 			else return false;
 			break;
 		}
@@ -116,22 +116,22 @@ void Hero::control()
 
 	if ((Keyboard::isKeyPressed(Keyboard::Down)) && (Keyboard::isKeyPressed(Keyboard::Left))) 
 	{
-		state = south_west;
+		state = SouthWest;
 	}
 	
 	if ((Keyboard::isKeyPressed(Keyboard::Down)) && (Keyboard::isKeyPressed(Keyboard::Right))) 
 	{ 
-		state = south_east; 
+		state = SouthEast; 
 	} 
 
 	if ((Keyboard::isKeyPressed(Keyboard::Up)) && (Keyboard::isKeyPressed(Keyboard::Left)))
 	{ 
-		state = north_west; 
+		state = NorthWest; 
 	} 
 
 	if ((Keyboard::isKeyPressed(Keyboard::Up)) && (Keyboard::isKeyPressed(Keyboard::Right)))
 	{ 
-		state = north_east; 
+		state = NorthEast; 
 	} 
 
 	if ((Keyboard::isKeyPressed(Keyboard::Left)) && (Keyboard::isKeyPressed(Keyboard::Right)))
@@ -172,31 +172,31 @@ void Hero::update(float time, float n)
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 122, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 122, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(60, 122, size_img, size_img));  
+						sprite.setTextureRect(IntRect(60, 122, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(122, 122, size_img, size_img));  
+						sprite.setTextureRect(IntRect(122, 122, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(185, 122, size_img, size_img));  
+						sprite.setTextureRect(IntRect(185, 122, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(248, 122, size_img, size_img));  
+						sprite.setTextureRect(IntRect(248, 122, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = east;
+				PrevState = east;
 				break; 
 
 			case west: //ƒвижение влево
@@ -206,31 +206,31 @@ void Hero::update(float time, float n)
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(5, 376, size_img, size_img));  
+						sprite.setTextureRect(IntRect(5, 376, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(65, 378, size_img, size_img));  
+						sprite.setTextureRect(IntRect(65, 378, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(127, 378, size_img, size_img));  
+						sprite.setTextureRect(IntRect(127, 378, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(197, 378, size_img, size_img));  
+						sprite.setTextureRect(IntRect(197, 378, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(257, 378, size_img, size_img));  
+						sprite.setTextureRect(IntRect(257, 378, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = west;
+				PrevState = west;
 				break;
 
 			case north: //ƒвижение вверх
@@ -240,31 +240,31 @@ void Hero::update(float time, float n)
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 0, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 0, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(58, 3, size_img, size_img));  
+						sprite.setTextureRect(IntRect(58, 3, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(117, 3, size_img, size_img));  
+						sprite.setTextureRect(IntRect(117, 3, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(183, 0, size_img, size_img));  
+						sprite.setTextureRect(IntRect(183, 0, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(248, 0, size_img, size_img));  
+						sprite.setTextureRect(IntRect(248, 0, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = north;
+				PrevState = north;
 				break;
 
 			case south: //ƒвижение вниз
@@ -274,135 +274,135 @@ void Hero::update(float time, float n)
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 248, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 248, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(58, 250, size_img, size_img));  
+						sprite.setTextureRect(IntRect(58, 250, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(117, 251, size_img, size_img));  
+						sprite.setTextureRect(IntRect(117, 251, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(185, 252, size_img, size_img));  
+						sprite.setTextureRect(IntRect(185, 252, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(250, 251, size_img, size_img));  
+						sprite.setTextureRect(IntRect(250, 251, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = south;
+				PrevState = south;
 				break;
 
-			case north_east: //ƒвижение вверх-вправо 
+			case NorthEast: //ƒвижение вверх-вправо 
 				CurrentFrame +=0.01*time;
 				if (CurrentFrame > 5) CurrentFrame -= 5;
 				switch (int(CurrentFrame))
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 58, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 58, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(57, 59, size_img, size_img));  
+						sprite.setTextureRect(IntRect(57, 59, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(121, 61, size_img, size_img));  
+						sprite.setTextureRect(IntRect(121, 61, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(183, 57, size_img, size_img));  
+						sprite.setTextureRect(IntRect(183, 57, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(248, 59, size_img, size_img));  
+						sprite.setTextureRect(IntRect(248, 59, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = north_east;
+				PrevState = NorthEast;
 				break; 
 
-			case north_west: //ƒвижение вверх-влево 
+			case NorthWest: //ƒвижение вверх-влево 
 				CurrentFrame +=0.01*time;
 				if (CurrentFrame > 5) CurrentFrame -= 5;
 				switch (int(CurrentFrame))
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(5, 442, size_img, size_img));  
+						sprite.setTextureRect(IntRect(5, 442, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(62, 443, size_img, size_img));  
+						sprite.setTextureRect(IntRect(62, 443, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(132, 443, size_img, size_img));  
+						sprite.setTextureRect(IntRect(132, 443, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(196, 443, size_img, size_img));  
+						sprite.setTextureRect(IntRect(196, 443, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(262, 439, size_img, size_img));  
+						sprite.setTextureRect(IntRect(262, 439, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = north_west;
+				PrevState = NorthWest;
 				break; 
 
-			case south_east: //ƒвижение вниз-вправо
+			case SouthEast: //ƒвижение вниз-вправо
 				CurrentFrame +=0.01*time;
 				if (CurrentFrame > 5) CurrentFrame -= 5;
 				switch (int(CurrentFrame))
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 185, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 185, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(57, 187, size_img, size_img));  
+						sprite.setTextureRect(IntRect(57, 187, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(120, 185, size_img, size_img));  
+						sprite.setTextureRect(IntRect(120, 185, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(185, 185, size_img, size_img));  
+						sprite.setTextureRect(IntRect(185, 185, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(249, 185, size_img, size_img));  
+						sprite.setTextureRect(IntRect(249, 185, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = south_east;
+				PrevState = SouthEast;
 				break; 
-			case south_west: //ƒвижение вниз-влево
+			case SouthWest: //ƒвижение вниз-влево
 
 				CurrentFrame +=0.01*time;
 				if (CurrentFrame > 5) CurrentFrame -= 5;
@@ -410,82 +410,82 @@ void Hero::update(float time, float n)
 				{
 					case 1:
 					{
-						sprite.setTextureRect(IntRect(0, 313, size_img, size_img));  
+						sprite.setTextureRect(IntRect(0, 313, SizeImg, SizeImg));  
 						break;
 					}
 					case 2:
 					{
-						sprite.setTextureRect(IntRect(59, 315, size_img, size_img));  
+						sprite.setTextureRect(IntRect(59, 315, SizeImg, SizeImg));  
 						break;
 					}
 					case 3:
 					{
-						sprite.setTextureRect(IntRect(127, 315, size_img, size_img));  
+						sprite.setTextureRect(IntRect(127, 315, SizeImg, SizeImg));  
 						break;
 					}
 					case 4:
 					{
-						sprite.setTextureRect(IntRect(191, 313, size_img, size_img));  
+						sprite.setTextureRect(IntRect(191, 313, SizeImg, SizeImg));  
 						break;
 					}
 					case 5:
 					{
-						sprite.setTextureRect(IntRect(256, 313, size_img, size_img));  
+						sprite.setTextureRect(IntRect(256, 313, SizeImg, SizeImg));  
 						break;
 					}
 				}
-				prevstate = south_west;
+				PrevState = SouthWest;
 				break; 
 
 			case block: // блокировка
 			{	
-				switch (prevstate)
+				switch (PrevState)
 				{
 					case north:
 					{
-						sprite.setTextureRect(IntRect(377, 0, size_img, size_img)); 
+						sprite.setTextureRect(IntRect(377, 0, SizeImg, SizeImg)); 
 						break;
 					}
 					
 					case west:
 					{
-						sprite.setTextureRect(IntRect(368, 380, size_img + 10, size_img)); 
+						sprite.setTextureRect(IntRect(368, 380, SizeImg + 10, SizeImg)); 
 						break;
 					}
 
 					case east:
 					{
-						sprite.setTextureRect(IntRect(383, 125, size_img + 10, size_img)); 
+						sprite.setTextureRect(IntRect(383, 125, SizeImg + 10, SizeImg)); 
 						break;
 					}
 
 					case south:
 					{
-						sprite.setTextureRect(IntRect(330, 318, size_img - 10, size_img)); 
+						sprite.setTextureRect(IntRect(330, 318, SizeImg - 10, SizeImg)); 
 						break;
 					}
 
-					case north_west:
+					case NorthWest:
 					{
-						sprite.setTextureRect(IntRect(374, 446, size_img, size_img)); 
+						sprite.setTextureRect(IntRect(374, 446, SizeImg, SizeImg)); 
 						break;
 					}
 
-					case north_east:
+					case NorthEast:
 					{
-						sprite.setTextureRect(IntRect(385, 61, size_img, size_img)); 
+						sprite.setTextureRect(IntRect(385, 61, SizeImg, SizeImg)); 
 						break;
 					}
 
-					case south_west:
+					case SouthWest:
 					{
-						sprite.setTextureRect(IntRect(315, 251, size_img, size_img)); 
+						sprite.setTextureRect(IntRect(315, 251, SizeImg, SizeImg)); 
 						break;
 					}
 
-					case south_east:
+					case SouthEast:
 					{
-						sprite.setTextureRect(IntRect(381, 192, size_img - 10, size_img)); 
+						sprite.setTextureRect(IntRect(381, 192, SizeImg - 10, SizeImg)); 
 						break;
 					}
 				}
@@ -496,7 +496,7 @@ void Hero::update(float time, float n)
 		}
 		else
 		{
-			switch (prevstate )
+			switch (PrevState )
 			{
 				case east://изображение атаки при направлении направо
 				{
@@ -504,27 +504,27 @@ void Hero::update(float time, float n)
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(314, 127, size_img, size_img));  
+							sprite.setTextureRect(IntRect(314, 127, SizeImg, SizeImg));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(384, 126, size_img+10, size_img));  
+							sprite.setTextureRect(IntRect(384, 126, SizeImg+10, SizeImg));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(443, 126, size_img, size_img+5));  
+							sprite.setTextureRect(IntRect(443, 126, SizeImg, SizeImg+5));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(510, 126, size_img+10, size_img));  
+							sprite.setTextureRect(IntRect(510, 126, SizeImg+10, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 120, size_img, size_img));  
+							sprite.setTextureRect(IntRect(0, 120, SizeImg, SizeImg));  
 							break;
 						}
 					}
@@ -537,27 +537,27 @@ void Hero::update(float time, float n)
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(327, 384, size_img - 10,size_img));  
+							sprite.setTextureRect(IntRect(327, 384, SizeImg - 10,SizeImg));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(360, 380, size_img+10, size_img));  
+							sprite.setTextureRect(IntRect(360, 380, SizeImg+10, SizeImg));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(443, 384, size_img, size_img+5));  
+							sprite.setTextureRect(IntRect(443, 384, SizeImg, SizeImg+5));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(507, 380, size_img, size_img-10));  
+							sprite.setTextureRect(IntRect(507, 380, SizeImg, SizeImg-10));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(5, 376, size_img, size_img));  
+							sprite.setTextureRect(IntRect(5, 376, SizeImg, SizeImg));  
 							break;
 						}
 					}
@@ -570,27 +570,27 @@ void Hero::update(float time, float n)
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(320, 0, size_img, size_img - 10));  
+							sprite.setTextureRect(IntRect(320, 0, SizeImg, SizeImg - 10));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(382, 0, size_img - 10, size_img + 10));  
+							sprite.setTextureRect(IntRect(382, 0, SizeImg - 10, SizeImg + 10));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(446, 0, size_img + 10, size_img - 10));  
+							sprite.setTextureRect(IntRect(446, 0, SizeImg + 10, SizeImg - 10));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(505, 0, size_img - 10, size_img));  
+							sprite.setTextureRect(IntRect(505, 0, SizeImg - 10, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 0, size_img, size_img));
+							sprite.setTextureRect(IntRect(0, 0, SizeImg, SizeImg));
 							break;
 						}
 					}
@@ -603,159 +603,159 @@ void Hero::update(float time, float n)
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(310, 252, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(310, 252, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(380, 254, size_img, size_img - 10));  
+							sprite.setTextureRect(IntRect(380, 254, SizeImg, SizeImg - 10));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(440, 246, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(440, 246, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(508, 249, size_img - 10, size_img + 10));  
+							sprite.setTextureRect(IntRect(508, 249, SizeImg - 10, SizeImg + 10));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 248, size_img, size_img)); 
+							sprite.setTextureRect(IntRect(0, 248, SizeImg, SizeImg)); 
 							break;
 						}
 					}
 				break;
 				}
 
-				case south_east://изображение атаки при направлении вниз-вправо
+				case SouthEast://изображение атаки при направлении вниз-вправо
 				{
 					switch (int(n))
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(311, 189, size_img + 10, size_img - 10));  
+							sprite.setTextureRect(IntRect(311, 189, SizeImg + 10, SizeImg - 10));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(375, 188, size_img, size_img + 10));  
+							sprite.setTextureRect(IntRect(375, 188, SizeImg, SizeImg + 10));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(436, 190, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(436, 190, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(505, 184, size_img + 20, size_img));  
+							sprite.setTextureRect(IntRect(505, 184, SizeImg + 20, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 185, size_img, size_img));
+							sprite.setTextureRect(IntRect(0, 185, SizeImg, SizeImg));
 							break;
 						}
 					}
 				break;
 				}
 
-				case south_west://изображение атаки при направлении вниз-влево
+				case SouthWest://изображение атаки при направлении вниз-влево
 				{
 					switch (int(n))
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(331, 316, size_img - 10, size_img + 10));  
+							sprite.setTextureRect(IntRect(331, 316, SizeImg - 10, SizeImg + 10));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(383, 319, size_img, size_img + 10));  
+							sprite.setTextureRect(IntRect(383, 319, SizeImg, SizeImg + 10));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(448, 317, size_img - 5, size_img + 10));  
+							sprite.setTextureRect(IntRect(448, 317, SizeImg - 5, SizeImg + 10));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(491, 315, size_img + 20, size_img));  
+							sprite.setTextureRect(IntRect(491, 315, SizeImg + 20, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 313, size_img, size_img));
+							sprite.setTextureRect(IntRect(0, 313, SizeImg, SizeImg));
 							break;
 						}
 					}
 				break;
 				}
 
-				case north_east://изображение атаки при направлении вверх-вправо
+				case NorthEast://изображение атаки при направлении вверх-вправо
 				{
 					switch (int(n))
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(317, 60, size_img + 15, size_img));  
+							sprite.setTextureRect(IntRect(317, 60, SizeImg + 15, SizeImg));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(383, 62, size_img+10, size_img));  
+							sprite.setTextureRect(IntRect(383, 62, SizeImg+10, SizeImg));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(444, 58, size_img + 10, size_img + 10));  
+							sprite.setTextureRect(IntRect(444, 58, SizeImg + 10, SizeImg + 10));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(505, 63, size_img, size_img));  
+							sprite.setTextureRect(IntRect(505, 63, SizeImg, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(0, 58, size_img, size_img));  
+							sprite.setTextureRect(IntRect(0, 58, SizeImg, SizeImg));  
 							break;
 						}
 					}
 				break;
 				}
 
-				case north_west://изображение атаки при направлении вверх-влево
+				case NorthWest://изображение атаки при направлении вверх-влево
 				{
 					switch (int(n))
 					{
 						case 0:
 						{
-							sprite.setTextureRect(IntRect(306, 445, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(306, 445, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 1:
 						{
-							sprite.setTextureRect(IntRect(369, 445, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(369, 445, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 2:
 						{
-							sprite.setTextureRect(IntRect(429, 448, size_img + 10, size_img));  
+							sprite.setTextureRect(IntRect(429, 448, SizeImg + 10, SizeImg));  
 							break;
 						}
 						case 3:
 						{
-							sprite.setTextureRect(IntRect(505, 446, size_img + 20, size_img));  
+							sprite.setTextureRect(IntRect(505, 446, SizeImg + 20, SizeImg));  
 							break;
 						}
 						case 4:
 						{
-							sprite.setTextureRect(IntRect(5, 442, size_img, size_img)); 
+							sprite.setTextureRect(IntRect(5, 442, SizeImg, SizeImg)); 
 							break;
 						}
 					}
@@ -767,8 +767,8 @@ void Hero::update(float time, float n)
 		if (hp <= 0)
 		{ 
 			life = false; 
-			sprite.setTextureRect(IntRect(700, 188, size_img, size_img)); 
+			sprite.setTextureRect(IntRect(700, 188, SizeImg, SizeImg)); 
 		}
-		sprite.setPosition(posX, posY);
+		sprite.setPosition(PosX, PosY);
 	}
 }

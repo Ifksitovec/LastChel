@@ -2,78 +2,78 @@
 #include <iostream>
 #include <cmath>
 
-void Entity::setstay()
+void Entity::SetStay()
 {
 	state = stay;
 }
 
-float Entity::getspeed()
+float Entity::GetSpeed()
 {
 	return speed;
 }
 
-Gstate Entity::getState()
+Gstate Entity::GetState()
 {
 	return state;
 }
 
-Sprite Entity::getimage()
+Sprite Entity::GetImage()
 {
 	return sprite;
 }
 
-bool Entity::getLife()
+bool Entity::GetLife()
 {
 	return life;
 }
 
-void Entity::setLife(bool l)
+void Entity::SetLife(bool l)
 {
 	life = l;
 }
 
-void Entity::setScore(int s)
+void Entity::SetScore(int s)
 {
 	score += s;
 }
 
-int Entity::getScore()
+int Entity::GetScore()
 {
 	return score;
 }
 
-int Entity::getHP()
+int Entity::GetHp()
 {
 	return hp;
 }
 
 //получение позиции по Х персонажа
-float Entity::getposX()
+float Entity::GetPosX()
 {
-	return posX;
+	return PosX;
 }
 
 //получение позиции по У персонажа
-float Entity::getposY()
+float Entity::GetPosY()
 {
-	return posY;
+	return PosY;
 }
 
-void Entity::changePos(float x, float y)
+void Entity::ChangePos(float x, float y)
 {
-	posX += x;
-	posY += y;
+	PosX += x;
+	PosY += y;
 }
 
-int Entity::getDamage()
+int Entity::GetDamage()
 {
 	return damage;
 }
 
-bool Entity::shoot_delay()
+bool Entity::ShootDelay()
 {
-	shoot_time = time.getElapsedTime().asMilliseconds();
-	if (shoot_time >= delay)
+	ShootTime = time.getElapsedTime().asMilliseconds();
+	if (ShootTime >= delay)
 	{
 		time.restart();
 		return true;
@@ -82,13 +82,34 @@ bool Entity::shoot_delay()
 		return false;
 }
 
-void Entity::setN(float time)
+void Entity::SetN(float time)
 {
 	if (N > 4) N = 0;
 	else N += 0.01*time;
 }
 
-float Entity::getN()
+float Entity::GetN()
 {
 	return N;
+}
+
+FloatRect Entity::GetRect()
+{
+	if (type == pers) 
+	{
+		FloatRect FR(PosX, PosY, SizeImg, SizeImg); 
+		return FR;
+	}
+	else
+	if (type == arrow)
+	{
+		FloatRect FR(PosX, PosY, SizeImgArr, SizeImgArr); 
+		return FR;
+	}
+	
+}
+
+Gtype Entity::GetType()
+{
+	return type;
 }

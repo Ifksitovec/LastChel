@@ -3,7 +3,7 @@
 #ifndef __MAPCREATOR_H__ 
 #define __MAPCREATOR_H__ 
 
-void randomMapGenerate();
-void update_map(int);
+void RandomMapGenerate();
+void UpdateMap(int);
 
 #endif

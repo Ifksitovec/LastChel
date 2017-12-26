@@ -2,11 +2,11 @@
 
 Grant::Grant(float x, float y)
 {
-	prevstate = east;//направляющее положение
+	PrevState = east;//направляющее положение
 	state = stay; // начальное положение
 	hp = 150;
-	posX = x;
-	posY = y;
+	PosX = x;
+	PosY = y;
 	speed = 0.05;
 	type = pers;
 	CurrentFrame = 0;
@@ -16,70 +16,70 @@ Grant::Grant(float x, float y)
 
 	texture.loadFromFile("images/grant.png");
 	sprite.setTexture(texture);
-	sprite.setPosition(posX, posY);
-	sprite.setTextureRect(IntRect(36, 176, size_img - 15, size_img));
+	sprite.setPosition(PosX, PosY);
+	sprite.setTextureRect(IntRect(36, 176, SizeImg - 15, SizeImg));
 }
 
-bool Grant::radiusDamage(float x,float y)
+bool Grant::RadiusDamage(float x,float y)
 {
 	float dposX = x, dposY = y;
-	int s = size_img - 20;
+	int s = SizeImg - 20;
 	if (life)
 	{
-		switch (prevstate)
+		switch (PrevState)
 		{
 			case north:
 			{
-				if ((posY - ((size + s)/2) ) < 15) return true;
+				if ((PosY - ((size + s)/2) ) < 15) return true;
 				else false;
 				break;
 			}
 
 			case west:
 			{
-				if ((posX - ((size + s)/2) ) < 15) return true;
+				if ((PosX - ((size + s)/2) ) < 15) return true;
 				else false;
 				break;
 			}
 
 			case east:
 			{
-				if ((((size + 3 * s)/2) - posX) < 15) return true;
+				if ((((size + 3 * s)/2) - PosX) < 15) return true;
 				else false;
 				break;
 			}
 		
 			case south:
 			{
-				if ((((size + 3 * s)/2) - posY) < 15) return true;
+				if ((((size + 3 * s)/2) - PosY) < 15) return true;
 				else false;
 				break;
 			}
 
-			case north_east:
+			case NorthEast:
 			{
-				if (((posY - ((size + s)/2) ) < 15) && ((((size + 3 * s)/2) - posX) < 15)) return true;
+				if (((PosY - ((size + s)/2) ) < 15) && ((((size + 3 * s)/2) - PosX) < 15)) return true;
 				else false;
 				break;
 			}
 
-			case north_west:
+			case NorthWest:
 			{
-				if (((posX - ((size + s)/2) ) < 15) && ((posY - ((size + s)/2) ) < 15)) return true;
+				if (((PosX - ((size + s)/2) ) < 15) && ((PosY - ((size + s)/2) ) < 15)) return true;
 				else false;
 				break;
 			}
 
-			case south_east:
+			case SouthEast:
 			{
-				if (((((size + 3 * s)/2) - posX) < 15) && ((((size + 3 * s)/2) - posY) < 15)) return true;
+				if (((((size + 3 * s)/2) - PosX) < 15) && ((((size + 3 * s)/2) - PosY) < 15)) return true;
 				else false;
 				break;
 			}
 		
-			case south_west:
+			case SouthWest:
 			{
-				if (((((size + 3 * s)/2) - posY) < 15) && ((posX - ((size + s)/2) ) < 15)) return true;
+				if (((((size + 3 * s)/2) - PosY) < 15) && ((PosX - ((size + s)/2) ) < 15)) return true;
 				else false;
 				break;
 			}
@@ -87,7 +87,7 @@ bool Grant::radiusDamage(float x,float y)
 	}
 }
 
-void Grant::setHP(int h)
+void Grant::SetHp(int h)
 {
 	hp += h;
 }
@@ -96,57 +96,57 @@ void Grant::setHP(int h)
 //определеение направления движения
 void Grant::control()
 { 
-	float dposX = posX - size/2, dposY = posY - size/ 2;
-	int s = size_img - 20;
+	float dposX = PosX - size/2, dposY = PosY - size/ 2;
+	int s = SizeImg - 20;
 
 	//Если объект достиг героя и стоит
-	if (((state == attack) || (state == stay)) && (posY <= (size + s)/2) && (posY >= (size - 3 * s)/2) && (posX <= (size + s)/2) && (posX >= (size - 3 * s)/2))
+	if (((state == attack) || (state == stay)) && (PosY <= (size + s)/2) && (PosY >= (size - 3 * s)/2) && (PosX <= (size + s)/2) && (PosX >= (size - 3 * s)/2))
 	{
 		state = attack;
 	}
 	else
 	{
-		if ((dposX > 0) && (dposY > 0) && (posX > (size + s)/2) && (posY > (size + s)/2))// если объект находится в правом нижнем углу
+		if ((dposX > 0) && (dposY > 0) && (PosX > (size + s)/2) && (PosY > (size + s)/2))// если объект находится в правом нижнем углу
 		{
 			if (dposX > dposY) state = north;
 			if (dposX < dposY) state = west;
-			if (dposX == dposY) state = north_west;
+			if (dposX == dposY) state = NorthWest;
 		}
 
-		if ((dposX > 0) && (dposY < 0) && (posX > (size + s)/2) && (posY < (size - 3 * s)/2))// если объект находится в правом верхнем углу
+		if ((dposX > 0) && (dposY < 0) && (PosX > (size + s)/2) && (PosY < (size - 3 * s)/2))// если объект находится в правом верхнем углу
 		{
 			if (dposX > -dposY) state = south;
 			if (dposX < -dposY) state = west;
-			if (dposX == -dposY) state = south_west;
+			if (dposX == -dposY) state = SouthWest;
 		}
 
-		if ((dposX < 0) && (dposY > 0) && (posX < (size - 3 * s)/2) && (posY > (size + s)/2))// если объект находится в левом нижнем углу
+		if ((dposX < 0) && (dposY > 0) && (PosX < (size - 3 * s)/2) && (PosY > (size + s)/2))// если объект находится в левом нижнем углу
 		{
 			if (-dposX > dposY) state = north;
 			if (-dposX < dposY) state = east;
-			if (-dposX == dposY) state = north_east;
+			if (-dposX == dposY) state = NorthEast;
 		}
 
-		if ((dposX < 0) && (dposY < 0) && (posX < (size - 3 * s)/2) && (posY < (size - 3 * s)/2))// если объект находится в правом нижнем углу
+		if ((dposX < 0) && (dposY < 0) && (PosX < (size - 3 * s)/2) && (PosY < (size - 3 * s)/2))// если объект находится в правом нижнем углу
 		{
 			if (-dposX > -dposY) state = south;
 			if (-dposX < -dposY) state = east;
-			if (-dposX == -dposY) state = south_east;
+			if (-dposX == -dposY) state = SouthEast;
 		}
 
-		if ((posX <= (size + s)/2) && (posX >= (size - 3 * s)/2))// если объект находится сверху или снизу от героя
+		if ((PosX <= (size + s)/2) && (PosX >= (size - 3 * s)/2))// если объект находится сверху или снизу от героя
 		{
 			if (dposY > 0) state = north;
 			if (dposY < 0) state = south;
 		}
 
-		if ((posY <= (size + s)/2) && (posY >= (size - 3 * s)/2))// если объект находится справа или слева от героя
+		if ((PosY <= (size + s)/2) && (PosY >= (size - 3 * s)/2))// если объект находится справа или слева от героя
 		{
 			if (dposX > 0) state = west;
 			if (dposX < 0) state = east;
 		}
 
-		if ((posY <= (size + s)/2) && (posY >= (size - 3 * s)/2) && (posX <= (size + s)/2) && (posX >= (size - 3 * s)/2)) state = stay; // если объект достиг героя
+		if ((PosY <= (size + s)/2) && (PosY >= (size - 3 * s)/2) && (PosX <= (size + s)/2) && (PosX >= (size - 3 * s)/2)) state = stay; // если объект достиг героя
 	}
 }
 
@@ -167,8 +167,8 @@ void Grant::update(float time,float n1)
 					dy = 0;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(14 + 60 * int(CurrentFrame), 381, size_img +10, size_img));
-					prevstate = west;
+					sprite.setTextureRect(IntRect(14 + 60 * int(CurrentFrame), 381, SizeImg +10, SizeImg));
+					PrevState = west;
 					break;
 				}
 
@@ -178,8 +178,8 @@ void Grant::update(float time,float n1)
 					dy = -speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 0, size_img +10, size_img));
-					prevstate = north;
+					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 0, SizeImg +10, SizeImg));
+					PrevState = north;
 					break;
 				}
 
@@ -189,8 +189,8 @@ void Grant::update(float time,float n1)
 					dy = 0;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 125, size_img + 10, size_img));
-					prevstate = east;
+					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 125, SizeImg + 10, SizeImg));
+					PrevState = east;
 					break;
 				}
 
@@ -200,52 +200,52 @@ void Grant::update(float time,float n1)
 					dy = speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 252, size_img + 10, size_img));
-					prevstate = south;
+					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 252, SizeImg + 10, SizeImg));
+					PrevState = south;
 					break;
 				}
 
-				case north_west://движение вверх-налево
+				case NorthWest://движение вверх-налево
 				{
 					dx = -speed;
 					dy = -speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(6 + 61 * int(CurrentFrame), 446, size_img + 11, size_img));
-					prevstate = north_west;
+					sprite.setTextureRect(IntRect(6 + 61 * int(CurrentFrame), 446, SizeImg + 11, SizeImg));
+					PrevState = NorthWest;
 					break;
 				}
 
-				case north_east://движение вверх-направо
+				case NorthEast://движение вверх-направо
 				{
 					dx = speed;
 					dy = -speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(61 * int(CurrentFrame), 62, size_img + 11, size_img));
-					prevstate = north_east;
+					sprite.setTextureRect(IntRect(61 * int(CurrentFrame), 62, SizeImg + 11, SizeImg));
+					PrevState = NorthEast;
 					break;
 				}
 
-				case south_east://движение вниз-направо
+				case SouthEast://движение вниз-направо
 				{
 					dx = speed;
 					dy = speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 188, size_img + 10, size_img));
-					prevstate = south_east;
+					sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 188, SizeImg + 10, SizeImg));
+					PrevState = SouthEast;
 					break;
 				}
 
-				case south_west://движение вниз-налево
+				case SouthWest://движение вниз-налево
 				{
 					dx = -speed;
 					dy = speed;
 					CurrentFrame += 0.01 * time;
 					if (CurrentFrame > 4) CurrentFrame -= 4;
-					sprite.setTextureRect(IntRect(11 + 60 * int(CurrentFrame), 315, size_img + 10, size_img));
-					prevstate = south_west;
+					sprite.setTextureRect(IntRect(11 + 60 * int(CurrentFrame), 315, SizeImg + 10, SizeImg));
+					PrevState = SouthWest;
 					break;
 				}
 
@@ -253,53 +253,53 @@ void Grant::update(float time,float n1)
 				case stay://положение стоять в зависимости от того какое до этого было положение
 				{
 					CurrentFrame = 0;
-					switch (prevstate)
+					switch (PrevState)
 					{
 						case north:
 						{	
-							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 0, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 0, SizeImg +10, SizeImg));
 							break;
 						}
 
 						case east:
 						{	
-							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 125, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 125, SizeImg + 10, SizeImg));
 							break;
 						}
 
 						case west:
 						{	
-							sprite.setTextureRect(IntRect(14 + 60 * int(CurrentFrame), 381, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(14 + 60 * int(CurrentFrame), 381, SizeImg +10, SizeImg));
 							break;
 						}
 
 						case south:
 						{	
-							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 252, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 252, SizeImg + 10, SizeImg));
 							break;
 						}
 
-						case north_west:
+						case NorthWest:
 						{	
-							sprite.setTextureRect(IntRect(6 + 61 * int(CurrentFrame), 446, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(6 + 61 * int(CurrentFrame), 446, SizeImg + 11, SizeImg));
 							break;
 						}
 
-						case north_east:
+						case NorthEast:
 						{	
-							sprite.setTextureRect(IntRect(61 * int(CurrentFrame), 62, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(61 * int(CurrentFrame), 62, SizeImg + 11, SizeImg));
 							break;
 						}
 
-						case south_west:
+						case SouthWest:
 						{	
-							sprite.setTextureRect(IntRect(11 + 60 * int(CurrentFrame), 315, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(11 + 60 * int(CurrentFrame), 315, SizeImg + 10, SizeImg));
 							break;
 						}
 
-						case south_east:
+						case SouthEast:
 						{	
-							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 188, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(60 * int(CurrentFrame), 188, SizeImg + 10, SizeImg));
 							break;
 						}
 						
@@ -312,61 +312,61 @@ void Grant::update(float time,float n1)
 		}
 		else //отображение атаки
 		{
-			switch (prevstate)
+			switch (PrevState)
 					{
 						case north:
 						{	
-							sprite.setTextureRect(IntRect(318 + 60 * int(n1), 0, size_img + 10, size_img));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 0, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(318 + 60 * int(n1), 0, SizeImg + 10, SizeImg));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 0, SizeImg +10, SizeImg));
 							break;
 						}
 
 						case east:
 						{	
-							sprite.setTextureRect(IntRect(314 + 63 * int(n1), 124, size_img + 13, size_img + 10));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 125, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(314 + 63 * int(n1), 124, SizeImg + 13, SizeImg + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 125, SizeImg + 10, SizeImg));
 							break;
 						}
 
 						case west:
 						{	
-							sprite.setTextureRect(IntRect(327 + 60 * int(n1), 380, size_img +10, size_img + 10));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(14, 381, size_img +10, size_img));
+							sprite.setTextureRect(IntRect(327 + 60 * int(n1), 380, SizeImg +10, SizeImg + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(14, 381, SizeImg +10, SizeImg));
 							break;
 						}
 
 						case south:
 						{	
-							sprite.setTextureRect(IntRect(310 + 63 * int(n1), 251, size_img + 13, size_img + 10));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 252, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(310 + 63 * int(n1), 251, SizeImg + 13, SizeImg + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 252, SizeImg + 10, SizeImg));
 							break;
 						}
 
-						case north_west:
+						case NorthWest:
 						{	
-							sprite.setTextureRect(IntRect(315 + 64 * int(n1), 445, size_img + 14, size_img));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(6, 446, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(315 + 64 * int(n1), 445, SizeImg + 14, SizeImg));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(6, 446, SizeImg + 11, SizeImg));
 							break;
 						}
 
-						case north_east:
+						case NorthEast:
 						{	
-							sprite.setTextureRect(IntRect(315 + 62 * int(n1), 61, size_img + 12, size_img));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 62, size_img + 11, size_img));
+							sprite.setTextureRect(IntRect(315 + 62 * int(n1), 61, SizeImg + 12, SizeImg));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 62, SizeImg + 11, SizeImg));
 							break;
 						}
 
-						case south_west:
+						case SouthWest:
 						{	
-							sprite.setTextureRect(IntRect(329 + 60 * int(n1), 315, size_img + 10, size_img + 10));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(11, 315, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(329 + 60 * int(n1), 315, SizeImg + 10, SizeImg + 10));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(11, 315, SizeImg + 10, SizeImg));
 							break;
 						}
 
-						case south_east:
+						case SouthEast:
 						{	
-							sprite.setTextureRect(IntRect(308 + 65 * int(n1), 187, size_img + 15, size_img));
-							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 188, size_img + 10, size_img));
+							sprite.setTextureRect(IntRect(308 + 65 * int(n1), 187, SizeImg + 15, SizeImg));
+							if ((int)n1 == 4) sprite.setTextureRect(IntRect(0, 188, SizeImg + 10, SizeImg));
 							break;
 						}
 						
@@ -375,16 +375,16 @@ void Grant::update(float time,float n1)
 		dy = 0;
 		}
 		
-		posX += dx * time; 
-		posY += dy * time;
+		PosX += dx * time; 
+		PosY += dy * time;
 		//state = stay;
 		if (hp <= 0)
 		{ 
 			life = false; 
-			sprite.setTextureRect(IntRect(699, 254, size_img + 10, size_img + 3)); 
+			sprite.setTextureRect(IntRect(699, 254, SizeImg + 10, SizeImg + 3)); 
 			dx = 0;
 			dy = 0;
 		}
 	}
-	sprite.setPosition(posX, posY);
+	sprite.setPosition(PosX, PosY);
 }

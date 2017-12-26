@@ -1,12 +1,12 @@
 #include "Entity.h"
 
-#ifndef __HERO_H__ 
-#define __HERO_H__ 
+#ifndef __TOWERARCH_H__ 
+#define __TOWERARCH_H__ 
 
-class Hero : public Entity
+class TowerArch : public Entity
 {
 public:
-	Hero();
+	TowerArch(float, float);
 	void update(float,float);
 	void control();
 	void SetHp(int);
