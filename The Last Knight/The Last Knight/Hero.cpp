@@ -20,9 +20,35 @@ Hero::Hero()
 	sprite.setTextureRect(IntRect(0, 127, SizeImg, SizeImg));
 }
 
+int Hero::GetTimeAction()
+{
+	return TimeAction;
+}
+
+void Hero::StartTime2()
+{
+	time2.restart();
+}
+
+bool Hero::TimeOfAction()
+{
+	TimeAction = 10 * delay - time2.getElapsedTime().asMilliseconds();
+	if (TimeAction > 0) return true;
+	else
+	{
+		if (TimeAction < 0) return false;
+	}
+}
+
+float Hero::GetSpeed()
+{
+	return speed;
+}
+
 void Hero::SetHp(int h)
 {
 	if (state != block) hp += h;
+	if (hp < 0) hp = 0;
 }
 
 bool Hero::RadiusDamage(float x, float y)// определение находится ли противник в зоне атаки

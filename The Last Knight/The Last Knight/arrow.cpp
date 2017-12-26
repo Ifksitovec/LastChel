@@ -13,7 +13,6 @@ Arrow::Arrow(float x, float y)
 	CurrentFrame = 0;
 	life = true;
 	damage = -20;
-	N = 0;
 
 	texture.loadFromFile("images/arm.png");
 	sprite.setTexture(texture);

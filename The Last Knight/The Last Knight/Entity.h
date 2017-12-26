@@ -9,7 +9,8 @@ class Entity
 {
 protected:
 	Gstate PrevState;
-	int hp, score, ShootTime;
+	int ShootTime;
+	int hp, score;
 	float CurrentFrame;
 	Clock time;
 	bool life;
@@ -21,16 +22,12 @@ protected:
 	Sprite sprite;
 	int damage;
 	float N; // счетчик атаки
-
 public:
 	Gtype GetType();
 	FloatRect GetRect();
-	float GetN(); // получение значения счетчика атаки
-	void SetN(float); // изменение счетчика атаки
 	int GetDamage();
 	void ChangePos(float,float);
 	void SetStay();
-	float GetSpeed();
 	Gstate GetState();
 	Sprite GetImage();
 	virtual bool RadiusDamage(float,float) = 0;
@@ -44,6 +41,8 @@ public:
 	void SetLife(bool);
 	void SetScore(int);
 	int GetScore();
+	float GetN(); // получение значения счетчика атаки
+	void SetN(float); // изменение счетчика атаки
 	bool ShootDelay();
 };
 

@@ -3,7 +3,7 @@
 #define __GLOBALS_H__ 
 
 enum Gstate { west, NorthWest, north , NorthEast, east, SouthEast, south, SouthWest, stay, attack, block};
-enum Gtype { pers, arrow, shell, tow };
+enum Gtype { pers, arrow, BonusHp, BonusDam, tow, magma };
 const int size = 800;
 const int SizeImg = 50;
 const int SizeImgArr = 25;
