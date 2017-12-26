@@ -2,14 +2,32 @@
 #include <iostream>
 #include <cmath>
 
+void Entity::SetN(float time)
+{
+	if (N > 4) N = 0;
+	else N += 0.01*time;
+}
+
+float Entity::GetN()
+{
+	return N;
+}
+
+bool Entity::ShootDelay()
+{
+	ShootTime = time.getElapsedTime().asMilliseconds();
+	if (ShootTime >= delay)
+	{
+		time.restart();
+		return true;
+	}
+	else
+		return false;
+}
+
 void Entity::SetStay()
 {
 	state = stay;
-}
-
-float Entity::GetSpeed()
-{
-	return speed;
 }
 
 Gstate Entity::GetState()
@@ -70,29 +88,6 @@ int Entity::GetDamage()
 	return damage;
 }
 
-bool Entity::ShootDelay()
-{
-	ShootTime = time.getElapsedTime().asMilliseconds();
-	if (ShootTime >= delay)
-	{
-		time.restart();
-		return true;
-	}
-	else
-		return false;
-}
-
-void Entity::SetN(float time)
-{
-	if (N > 4) N = 0;
-	else N += 0.01*time;
-}
-
-float Entity::GetN()
-{
-	return N;
-}
-
 FloatRect Entity::GetRect()
 {
 	if (type == pers) 
@@ -104,6 +99,12 @@ FloatRect Entity::GetRect()
 	if (type == arrow)
 	{
 		FloatRect FR(PosX, PosY, SizeImgArr, SizeImgArr); 
+		return FR;
+	}
+	else 
+	if ((type == BonusHp) || (type == BonusDam) || (type == magma))
+	{
+		FloatRect FR(PosX, PosY, SizeImgMap, SizeImgMap); 
 		return FR;
 	}
 	

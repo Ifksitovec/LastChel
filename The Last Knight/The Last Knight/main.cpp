@@ -2,12 +2,15 @@
 #include <iostream>
 #include "Hero.h"
 #include "globals.h"
-#include "map_creator.h"
+#include "MapCreator.h"
 #include "grant.h"
 #include <list>
 #include <sstream>
-#include "tower_with_archer.h"
+#include "TowerWithArcher.h"
 #include "arrow.h"
+#include "HealthBonus.h"
+#include "DamageBonus.h"
+#include "Magma.h"
 
 using namespace sf;
 using namespace std; 
@@ -23,18 +26,21 @@ int main()
 	int gameTime = 0;//объявили игровое время, инициализировали.
 
 	Font font;
-	font.loadFromFile("zealot.ttf");
-	Text text_hp("", font, 20);
-	text_hp.setColor(Color::Green);
-	Text text_score("", font, 20);
-	text_score.setColor(Color::Green);
+	font.loadFromFile("CyrilicOld.TTF");
+	Text TextHp("", font, 40);
+	TextHp.setColor(Color::Green);
+	Text TextScore("", font, 40);
+	TextScore.setColor(Color::Green);
+	Text TextLose("", font, 100);
+	TextLose.setColor(Color::Red);
+	Text TextLose1("", font, 102);
+	TextLose.setColor(Color::Black);
 
 	std::list<Entity*> enemy;
 	std::list<Entity*>::iterator ItEnemy;
 
 	std::list<Arrow*> arrow;
 	std::list<Arrow*>::iterator ItArrow;
-
 	Image MapImage;
 	MapImage.loadFromFile("images/map.png");
 	Texture map;
@@ -165,6 +171,24 @@ int main()
 					SpriteMap.setTextureRect(IntRect(0, 25, SizeImgMap, SizeImgMap));
 					enemy.push_back(new TowerArch(x, y));
 				}
+				if (TileMap[i][j] == 'h')
+				{
+					TileMap[i][j] = '0';//обнуление ячейки в которой появился бонус, чтобы там больше бонусы не появлялись
+					SpriteMap.setTextureRect(IntRect(0, 25, SizeImgMap, SizeImgMap));
+					enemy.push_back(new HealthBonus(x, y));
+				}
+				if (TileMap[i][j] == 'd')
+				{
+					TileMap[i][j] = '0';//обнуление ячейки в которой появился бонус, чтобы там больше бонусы не появлялись
+					SpriteMap.setTextureRect(IntRect(0, 25, SizeImgMap, SizeImgMap));
+					enemy.push_back(new DamageBonus(x, y));
+				}
+
+				if (TileMap[i][j] == 'm')//Добавление орка в лист если он заспаунился
+				{
+					TileMap[i][j] = '3';// добавление одного объекта магмы на клетку в которой он появился
+					enemy.push_back(new Magma(x, y));
+				}
 
 				SpriteMap.setPosition((int)(x + x1), (int)(y + y1));
 				window.draw(SpriteMap);
@@ -203,9 +227,13 @@ int main()
 			{
 				for (ItEnemy = enemy.begin();ItEnemy != enemy.end(); ItEnemy++) 
 				{
-					if (hero.RadiusDamage((*ItEnemy)->GetPosX(), (*ItEnemy)->GetPosY()) == true)
+					if ((hero.RadiusDamage((*ItEnemy)->GetPosX(), (*ItEnemy)->GetPosY()) == true) && ((*ItEnemy)->GetLife()))
 					{
-						(*ItEnemy)->SetHp(hero.GetDamage());
+						if (hero.TimeOfAction())
+						{
+							(*ItEnemy)->SetHp(2 * hero.GetDamage());
+						}
+						else (*ItEnemy)->SetHp(hero.GetDamage());
 						hero.SetScore(20);
 					}
 				}
@@ -213,17 +241,19 @@ int main()
 		}
 
 		//выстрел башни
-		for (ItEnemy = enemy.begin();ItEnemy != enemy.end(); ItEnemy++) 
+		if (hero.GetLife())
 		{
-			if ((*ItEnemy)->GetType() == tow)
+			for (ItEnemy = enemy.begin();ItEnemy != enemy.end(); ItEnemy++) 
 			{
-				if (((*ItEnemy)->GetLife()) && (*ItEnemy)->ShootDelay())
+				if ((*ItEnemy)->GetType() == tow)
 				{
-					arrow.push_back(new Arrow((*ItEnemy)->GetPosX(), (*ItEnemy)->GetPosY()));
+					if (((*ItEnemy)->GetLife()) && (*ItEnemy)->ShootDelay())
+					{
+						arrow.push_back(new Arrow((*ItEnemy)->GetPosX(), (*ItEnemy)->GetPosY()));
+					}
 				}
 			}
 		}
-		
 
 		//изменение позиции стрел, если герой сдвинулся
 		for (ItArrow = arrow.begin();ItArrow != arrow.end();ItArrow++)
@@ -253,10 +283,29 @@ int main()
 				}
 		}
 
+		//собирание бонусов и попадане в лаву
+		for (ItEnemy = enemy.begin();ItEnemy != enemy.end(); ItEnemy++)
+		{
+			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == BonusHp))
+			{
+				hero.SetHp((*ItEnemy)->GetDamage());
+				(*ItEnemy)->SetLife(false);
+			}
+			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == BonusDam))
+			{
+				hero.StartTime2();
+				(*ItEnemy)->SetLife(false);
+			}
+			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == magma))
+			{
+				hero.SetHp((*ItEnemy)->GetDamage());
+			}
+		}
+
 		//оживление врагов
 		for (ItEnemy = enemy.begin();ItEnemy != enemy.end(); ItEnemy++)
 		{
-			if (((*ItEnemy)->GetState() == attack) && ((*ItEnemy)->GetLife()) && (*ItEnemy)->ShootDelay()) // начало атаки
+			if (((*ItEnemy)->GetState() == attack) && ((*ItEnemy)->GetLife()) && (*ItEnemy)->ShootDelay() && (hero.GetLife())) // начало атаки
 			{
 				(*ItEnemy)->SetN(time);
 			}
@@ -269,14 +318,18 @@ int main()
 			(*ItEnemy)->update(time, (*ItEnemy)->GetN());
 		}
 
-		//удаление врагов, если они вышли за пределы карты, и при этом мертвы
+		//удаление врагов, если они вышли за пределы карты, и при этом мертвы, а также удаление бонусов если они подобраны
 		for (ItEnemy = enemy.begin();ItEnemy != enemy.end();) 
 		{
 			if ((((*ItEnemy)->GetPosX() < -50) || ((*ItEnemy)->GetPosY() < -50) || ((*ItEnemy)->GetPosX() > 850) || ((*ItEnemy)->GetPosY() > 850)) && ((*ItEnemy)->GetLife() == false))
-				{
-					ItEnemy = enemy.erase(ItEnemy); 
-				}
-			else  ItEnemy++;
+			{
+				ItEnemy = enemy.erase(ItEnemy); 
+			}
+			else if ((((*ItEnemy)->GetType() == BonusHp) || ((*ItEnemy)->GetType() == BonusDam)) && ((*ItEnemy)->GetLife() == false))
+			{
+				ItEnemy = enemy.erase(ItEnemy); 
+			}
+			else ItEnemy++;
 		}
 
 		//удаление стрел, если они попали в героя или улетели за пределы карты
@@ -312,13 +365,22 @@ int main()
 		std::ostringstream playerScoreString;
 		playerHPString << hero.GetHp();
 		playerScoreString << hero.GetScore();
-		text_hp.setString("Health: " + playerHPString.str());
-		text_hp.setPosition(600, 0);
-		text_score.setString("Score: " + playerScoreString.str());
-		text_score.setPosition(10, 0);
-		window.draw(text_hp);
-		window.draw(text_score);
-
+		TextHp.setString("Здоровье: " + playerHPString.str());
+		TextHp.setPosition(500, 0);
+		TextScore.setString("Очки: " + playerScoreString.str());
+		TextScore.setPosition(10, 0);
+		if (hero.GetLife() == false)
+		{
+			
+			TextLose.setString("ПОТРАЧЕНО");
+			TextLose.setPosition(100, 350);
+			window.draw(TextLose);
+			TextLose1.setString("ПОТРАЧЕНО");
+			TextLose1.setPosition(99, 349);
+			window.draw(TextLose1);
+		}
+		window.draw(TextHp);
+		window.draw(TextScore);
 
 		window.display(); //Показываем объект на экране
 		window.clear(); //Очищаем экран
