@@ -1,3 +1,4 @@
+//hero.h
 #include "Entity.h"
 
 #ifndef __HERO_H__ 
@@ -12,7 +13,7 @@ public:
 	Hero();
 	void update(float,float);
 	void control();
-	void SetHp(int);
+	void SetHp(int, Gtype);
 	bool RadiusDamage(float,float);
 	float GetSpeed();
 	bool TimeOfAction();

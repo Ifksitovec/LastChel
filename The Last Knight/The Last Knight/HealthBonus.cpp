@@ -1,3 +1,4 @@
+//HealthBonus.cpp
 #include "HealthBonus.h"
 
 HealthBonus::HealthBonus(float x, float y)
@@ -24,7 +25,7 @@ bool HealthBonus::RadiusDamage(float x,float y)
 	return true;
 }
 
-void HealthBonus::SetHp(int h)
+void HealthBonus::SetHp(int h, Gtype)
 {
 	hp = hp;
 }

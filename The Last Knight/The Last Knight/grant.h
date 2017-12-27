@@ -1,3 +1,4 @@
+//grant.h
 #include "Entity.h"
 
 #ifndef __GRANT_H__ 
@@ -9,7 +10,7 @@ public:
 	Grant(float, float);
 	void update(float,float);
 	void control();
-	void SetHp(int);
+	void SetHp(int, Gtype);
 	bool RadiusDamage(float,float);
 };
 

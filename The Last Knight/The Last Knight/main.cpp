@@ -1,3 +1,4 @@
+//main.cpp
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Hero.h"
@@ -231,9 +232,9 @@ int main()
 					{
 						if (hero.TimeOfAction())
 						{
-							(*ItEnemy)->SetHp(2 * hero.GetDamage());
+							(*ItEnemy)->SetHp(2 * hero.GetDamage(), hero.GetType());
 						}
-						else (*ItEnemy)->SetHp(hero.GetDamage());
+						else (*ItEnemy)->SetHp(hero.GetDamage(),hero.GetType());
 						hero.SetScore(20);
 					}
 				}
@@ -278,7 +279,7 @@ int main()
 		{
 			if (hero.GetRect().intersects((*ItArrow)->GetRect()))
 				{
-					hero.SetHp((*ItArrow)->GetDamage());
+					hero.SetHp((*ItArrow)->GetDamage(),(*ItArrow)->GetType());
 					(*ItArrow)->SetLife(false);
 				}
 		}
@@ -288,7 +289,7 @@ int main()
 		{
 			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == BonusHp))
 			{
-				hero.SetHp((*ItEnemy)->GetDamage());
+				hero.SetHp((*ItEnemy)->GetDamage(),hero.GetType());
 				(*ItEnemy)->SetLife(false);
 			}
 			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == BonusDam))
@@ -298,7 +299,7 @@ int main()
 			}
 			if ((hero.GetRect().intersects((*ItEnemy)->GetRect())) && ((*ItEnemy)->GetType() == magma))
 			{
-				hero.SetHp((*ItEnemy)->GetDamage());
+				hero.SetHp((*ItEnemy)->GetDamage(),(*ItEnemy)->GetType());
 			}
 		}
 
@@ -312,7 +313,7 @@ int main()
 
 			if ((*ItEnemy)->GetN() > 0)// если атака начата
 			{
-				if (((int)((*ItEnemy)->GetN()) == 4 ) && ((*ItEnemy)->RadiusDamage(0,0))) hero.SetHp((*ItEnemy)->GetDamage());
+				if (((int)((*ItEnemy)->GetN()) == 4 ) && ((*ItEnemy)->RadiusDamage(0,0))) hero.SetHp((*ItEnemy)->GetDamage(),(*ItEnemy)->GetType());
 				(*ItEnemy)->SetN(time);
 			}
 			(*ItEnemy)->update(time, (*ItEnemy)->GetN());
@@ -371,13 +372,13 @@ int main()
 		TextScore.setPosition(10, 0);
 		if (hero.GetLife() == false)
 		{
-			
-			TextLose.setString("ПОТРАЧЕНО");
-			TextLose.setPosition(100, 350);
-			window.draw(TextLose);
 			TextLose1.setString("ПОТРАЧЕНО");
 			TextLose1.setPosition(99, 349);
 			window.draw(TextLose1);
+			TextLose.setString("ПОТРАЧЕНО");
+			TextLose.setPosition(100, 350);
+			window.draw(TextLose);
+			
 		}
 		window.draw(TextHp);
 		window.draw(TextScore);

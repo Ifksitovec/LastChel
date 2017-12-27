@@ -1,3 +1,4 @@
+//Hero.cpp
 #include "Hero.h"
 
 Hero::Hero() 
@@ -45,9 +46,9 @@ float Hero::GetSpeed()
 	return speed;
 }
 
-void Hero::SetHp(int h)
+void Hero::SetHp(int h, Gtype t)
 {
-	if (state != block) hp += h;
+	if ((state != block) || (t == magma)) hp += h;
 	if (hp < 0) hp = 0;
 }
 

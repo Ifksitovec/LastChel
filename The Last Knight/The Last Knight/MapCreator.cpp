@@ -1,3 +1,4 @@
+//MapCreator.cpp
 #include "MapCreator.h"
 
 char TileMap[HeightMap][HeightMap];

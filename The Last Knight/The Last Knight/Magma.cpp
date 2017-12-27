@@ -1,3 +1,4 @@
+//Magma.cpp
 #include "Magma.h"
 
 Magma::Magma(float x, float y)
@@ -24,7 +25,7 @@ bool Magma::RadiusDamage(float x,float y)
 	return true;
 }
 
-void Magma::SetHp(int h)
+void Magma::SetHp(int h, Gtype t)
 {
 	hp = hp;
 }

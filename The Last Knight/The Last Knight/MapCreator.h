@@ -1,3 +1,4 @@
+//MapCreator.h
 #include "globals.h"
 
 #ifndef __MAPCREATOR_H__ 

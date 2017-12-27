@@ -1,3 +1,4 @@
+//DamageBonus.cpp
 #include "DamageBonus.h"
 
 DamageBonus::DamageBonus(float x, float y)
@@ -24,7 +25,7 @@ bool DamageBonus::RadiusDamage(float x,float y)
 	return true;
 }
 
-void DamageBonus::SetHp(int h)
+void DamageBonus::SetHp(int h, Gtype t)
 {
 	hp = hp;
 }

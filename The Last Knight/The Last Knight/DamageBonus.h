@@ -1,3 +1,4 @@
+//DamageBonus.h
 #include "Entity.h"
 
 #ifndef __DAMAGEBONUS_H__ 
@@ -9,7 +10,7 @@ public:
 	DamageBonus(float, float);
 	void update(float,float);
 	void control();
-	void SetHp(int);
+	void SetHp(int, Gtype);
 	bool RadiusDamage(float,float);
 };
 

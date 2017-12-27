@@ -1,3 +1,4 @@
+//TowerWithArcher.h
 #include "Entity.h"
 
 #ifndef __TOWERARCH_H__ 
@@ -9,7 +10,7 @@ public:
 	TowerArch(float, float);
 	void update(float,float);
 	void control();
-	void SetHp(int);
+	void SetHp(int, Gtype);
 	bool RadiusDamage(float,float);
 };
 

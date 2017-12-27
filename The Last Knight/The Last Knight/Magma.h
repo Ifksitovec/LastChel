@@ -1,3 +1,4 @@
+//Magma.h
 #include "Entity.h"
 
 #ifndef __MAGMA_H__ 
@@ -9,7 +10,7 @@ public:
 	Magma(float, float);
 	void update(float,float);
 	void control();
-	void SetHp(int);
+	void SetHp(int, Gtype);
 	bool RadiusDamage(float,float);
 };
 

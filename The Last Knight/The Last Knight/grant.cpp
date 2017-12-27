@@ -1,3 +1,4 @@
+//grant.cpp
 #include "grant.h"
 
 Grant::Grant(float x, float y)
@@ -87,7 +88,7 @@ bool Grant::RadiusDamage(float x,float y)
 	}
 }
 
-void Grant::SetHp(int h)
+void Grant::SetHp(int h, Gtype t)
 {
 	hp += h;
 }

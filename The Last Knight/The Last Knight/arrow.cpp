@@ -1,3 +1,4 @@
+//arrow.cpp
 #include "arrow.h"
 #include <cmath>
 using namespace std;
@@ -127,7 +128,7 @@ Arrow::Arrow(float x, float y)
 	}
 }
 
-void Arrow::SetHp(int h)
+void Arrow::SetHp(int h, Gtype t)
 {
 	hp = hp;
 }

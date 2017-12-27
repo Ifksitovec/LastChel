@@ -1,3 +1,4 @@
+//TowerWithArcher.cpp
 #include "TowerWithArcher.h"
 
 TowerArch::TowerArch(float x, float y)
@@ -59,7 +60,7 @@ bool TowerArch::RadiusDamage(float x,float y)
 }
 
 
-void TowerArch::SetHp(int h)
+void TowerArch::SetHp(int h, Gtype t)
 {
 	hp += h;
 }

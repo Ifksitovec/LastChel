@@ -1,3 +1,4 @@
+//Entity.h
 #include "SFML/Graphics.hpp"
 #include "globals.h"
 using namespace sf;
@@ -33,7 +34,7 @@ public:
 	virtual bool RadiusDamage(float,float) = 0;
 	virtual void update(float,float) = 0;
 	virtual void control() = 0;
-	virtual void SetHp(int) = 0;
+	virtual void SetHp(int, Gtype) = 0;
 	int GetHp();
 	float GetPosX();
 	float GetPosY();
